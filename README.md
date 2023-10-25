@@ -1,7 +1,7 @@
 # Trabalho prático 2 - PSR
 
 ## Repository owner: Pedro Martins 103800 
-## Colaborators: Gustavo Reggio; Tomás Taxa.
+## Collaborators: Gustavo Reggio; Tomás Taxa.
 
 This repository was created for evaluation at Robotic Systems Programming "PSR 23-24 Trabalho prático 2".
 
