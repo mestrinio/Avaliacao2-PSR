@@ -1,4 +1,4 @@
-# Avaliacao2-PSR
+# Trabalho prático 2 - PSR
 
 ## Repository owner: Pedro Martins 103800 
 ## Colaborators: Gustavo Reggio; Tomás Taxa.
