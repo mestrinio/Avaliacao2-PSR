@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import cv2
 import numpy as np
+import imutils
 
 
 
@@ -29,6 +30,22 @@ def show_webcam(mirror=False):
         
         ret, thresh1 = cv2.threshold(mask,127,255,cv2.THRESH_BINARY)
         cv2.imshow('thresh',thresh1)
+        
+        #cnts = cv2.findContours(thresh1.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv2.findContours(thresh1, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+        cv2.drawContours(thresh1, contours, -1, (0,255,0), 3)
+        #cnts = imutils.grab_contours(cnts)
+        for c in contours:
+            M = cv2.moments(c)
+            if M['m00'] != 0:
+                cX = int(M["m10"] / M["m00"])
+                cY = int(M["m01"] / M["m00"])
+                cv2.drawContours(thresh1, [c], -1, (0,255,0), 2)
+                cv2.circle(thresh1, (cX, cY), 7, (255,255,255), -1)
+                cv2.putText(thresh1, "center", (cX - 20, cY -20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,255),2)
+            
+        
+        
         #ret, thresh = cv2.threshold(gray_image, 50, 255, cv2.THRESH_BINARY)
         #im, contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         #cv2.drawContours(img, contours, 0, (0, 255, 0), 2)
