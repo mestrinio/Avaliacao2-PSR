@@ -31,18 +31,18 @@ def show_webcam(mirror=False):
         
         ret, thresh1 = cv2.threshold(mask,127,255,cv2.THRESH_BINARY)
         cv2.imshow('thresh',thresh1)
-        contours, hierarchy = cv2.findContours(thresh1, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+        #contours, hierarchy = cv2.findContours(thresh1, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
-        cnts = cv2.drawContours(img, contours[1], -1, (0, 255, 0), 1)
+        #cnts = cv2.drawContours(img, contours[1], -1, (0, 255, 0), 1)
 
        
         
 
-        m = cv2.moments(cnts[0])
-        cx = int(m["m10"] / m["m00"])
-        cy = int(m["m01"] / m["m00"])
+        #m = cv2.moments(cnts[0])
+        #cx = int(m["m10"] / m["m00"])
+        #cy = int(m["m01"] / m["m00"])
 
-        cv2.circle(img, (cx, cy), 1, (0, 0, 255), 3)
+        #cv2.circle(img, (cx, cy), 1, (0, 0, 255), 3)
 
         
         #cnts = cv2.findContours(thresh1.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
