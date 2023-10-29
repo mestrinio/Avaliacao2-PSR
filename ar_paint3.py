@@ -9,10 +9,9 @@ import json
 import color_segmenter1
 import numpy as np
 import linecache
-import re
+import os
 import readchar
-import keyboard
-from pynput.keyboard import Key, Listener
+from datetime import datetime
 #import imutils
 
 ##arguments
@@ -25,28 +24,95 @@ def arguments():
     return args
 
 
+def data(date):
+    
+    now = datetime.now() # current date and time
+    
+    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+    
+    # Acessando os atributos da instância
+    dia_da_semana = date.weekday()
+    mes = str(date.month)
+    dia = str(date.day)
+    hora = str(date.hour)
+    ano = str(date.year)
+    
+    if dia_da_semana == 0:
+        weekday = 'Mon'
+    elif dia_da_semana == 1:
+        weekday = 'Tue'
+    elif dia_da_semana == 2:
+        weekday = 'Wed'
+    elif dia_da_semana == 3:
+        weekday = 'Thu'
+    elif dia_da_semana == 4:
+        weekday = 'Fri'
+    elif dia_da_semana == 5:
+        weekday = 'Sat'
+    elif dia_da_semana == 6:
+        weekday = 'Sun'
+    
+    return weekday,mes,dia,hora,ano
 
-def brush():
+
+
+
+def keyboardpress(brush_stats,paintWindow):
+    image_path = Image
     
+    key_pressed = cv2.waitKey(1) & 0xFF
+    if key_pressed == ord('q'):
+        cv2.destroyAllWindows
+        print('Exiting...')
+        exit()
+        
+    elif key_pressed == ord('r'):
+        brush_stats['color'] = (0,0,255)
+        print('Brush color set to red')
+        
+    elif key_pressed == ord('g'):
+        brush_stats['color'] = (0,255,0)
+        print('Brush color set to green')
+            
+    elif key_pressed == ord('b'):
+        brush_stats['color'] = (255,0,0)
+        print('Brush color set to blue')
+        
+    elif key_pressed == ord('+'):
+        
+        if brush_stats['size'] < 50:
+            brush_stats['size'] += 1
+            print('Increased size +1')
+        else:
+            print('Max size reached')
+            
+    elif key_pressed == ord('-'):
+        
+        if brush_stats['size'] > 1:
+            brush_stats['size'] -= 1
+            print('Decreased size -1')
+        else:
+            print('Min size reached')
+            
+    elif key_pressed == ord('c'):
+        paintWindow = np.zeros((500,600,3)) + 255
+        
+    elif key_pressed == ord('w'):
+        date = datetime.datetime.now()
+        data(date)
+
+
+    return
+            
     
-    while True:
-        
-        if keyboard.read_key('a'):
-            brushsize = brushsize + 5
             
-        if keyboard.read_key('s'):
-            brushsize = brushsize - 5
+    
             
-        if keyboard.read_key('r'):
-            brushcolor = (0,0,255)
             
-        if keyboard.read_key('g'):
-            brushcolor = (0,255,0)
+            
         
-        if keyboard.read_key('b'):
-            brushcolor = (255,0,0)
-        
-        return brushcolor,brushsize
+            
+            
             
         
 
@@ -99,7 +165,7 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
                 #print("Centroid Y:", cy)
                 cv2.circle(img, (cx, cy), 5, (0, 0, 255), -1)  # Red circle at the centroid
                 cv2.circle(hsv,(cx,cy),55,(0,0,255),-1)
-                cv2.circle(paintWindow,(cx,cy),brushsize,brushcolor,1)
+                cv2.circle(paintWindow,(cx,cy),brush_stats[size],brush_stats[color],1)
             else:
                 print("No centroid found (division by zero)")
 
