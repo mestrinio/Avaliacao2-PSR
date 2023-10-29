@@ -10,6 +10,9 @@ import color_segmenter1
 import numpy as np
 import linecache
 import re
+import readchar
+import keyboard
+from pynput.keyboard import Key, Listener
 #import imutils
 
 ##arguments
@@ -21,9 +24,37 @@ def arguments():
     args = parser.parse_args()
     return args
 
+
+
+def brush():
+    
+    
+    while True:
+        
+        if keyboard.read_key('a'):
+            brushsize = brushsize + 5
+            
+        if keyboard.read_key('s'):
+            brushsize = brushsize - 5
+            
+        if keyboard.read_key('r'):
+            brushcolor = (0,0,255)
+            
+        if keyboard.read_key('g'):
+            brushcolor = (0,255,0)
+        
+        if keyboard.read_key('b'):
+            brushcolor = (255,0,0)
+        
+        return brushcolor,brushsize
+            
+        
+
 def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
     cam = cv2.VideoCapture(0)
-    
+    paintWindow = np.zeros((500,600,3)) + 255
+    brushsize = 5
+    brushcolor = (255,255,255)
     while True:
         ret_val, img = cam.read()
         
@@ -47,7 +78,6 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
         print(num_labels)
         
         
-        
         # Find the label (component) with the largest area
         
         if num_labels > 1:
@@ -69,17 +99,18 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
                 #print("Centroid Y:", cy)
                 cv2.circle(img, (cx, cy), 5, (0, 0, 255), -1)  # Red circle at the centroid
                 cv2.circle(hsv,(cx,cy),55,(0,0,255),-1)
+                cv2.circle(paintWindow,(cx,cy),brushsize,brushcolor,1)
             else:
                 print("No centroid found (division by zero)")
 
-            # Draw a circle at the centroid for visualization
+            
             
         
             # Display the largest component mask and the image with the centroid
-            cv2.imshow('Largest Component Mask', largest_component_mask)
+            #cv2.imshow('Largest Component Mask', largest_component_mask)
         cv2.imshow('mask',mask)
         cv2.imshow('Image with Centroid', img)
-
+        cv2.imshow('draw', paintWindow)
         
         
         if cv2.waitKey(1) == 27:
@@ -130,11 +161,13 @@ def limits(json_file):
     return low_H, low_S, low_V, high_H, high_S, high_V
 
 def main():
-
+    
     args = arguments()
     json_file = args.json
+    brush()
     low_H, low_S, low_V, high_H, high_S, high_V= limits(json_file)
     show_webcam(low_H, low_S, low_V, high_H, high_S, high_V, mirror=True)
+    
 
 if __name__ == '__main__':
     main()
