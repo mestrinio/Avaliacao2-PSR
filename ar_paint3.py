@@ -72,6 +72,7 @@ def keyboardpress(brush_stats,copypaint,img):
             
     elif key_pressed == ord('c'):
         cl = 1
+        print('Cleared Canvas')
         
 
     elif key_pressed == ord('w'):
@@ -146,8 +147,6 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V ,brush_stats=brush_s
             if c == 1: # CLEAR PAINT WINDOW
                 c = 0
                 paintWindow = np.zeros((img.shape)) + 255
-            else:
-                continue
             
             cv2.drawMarker(img, (cx, cy), color=[0, 0, 255], thickness=7,markerType= cv2.MARKER_TILTED_CROSS, line_type=cv2.LINE_AA,markerSize=30)
             cv2.circle(hsv,(cx,cy),55,(0,0,255),-1)
