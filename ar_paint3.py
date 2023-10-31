@@ -2,6 +2,8 @@
 #shebang line to inform the OS that the content is in python
 
 from __future__ import print_function
+from copy import deepcopy
+import time
 import cv2
 import argparse
 from colorama import Fore, Back, Style
@@ -11,11 +13,14 @@ import numpy as np
 import linecache
 import os
 import readchar
-from datetime import datetime
+
 #import imutils
 
 ##arguments
 import argparse
+
+brush_stats = {'size':10,'color':(0,0,0)}
+
 
 def arguments():
     parser = argparse.ArgumentParser(description='Menu of Drawing Mode')
@@ -24,47 +29,18 @@ def arguments():
     return args
 
 
-def data(date):
-    
-    now = datetime.now() # current date and time
-    
-    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-    
-    # Acessando os atributos da instância
-    dia_da_semana = date.weekday()
-    mes = str(date.month)
-    dia = str(date.day)
-    hora = str(date.hour)
-    ano = str(date.year)
-    
-    if dia_da_semana == 0:
-        weekday = 'Mon'
-    elif dia_da_semana == 1:
-        weekday = 'Tue'
-    elif dia_da_semana == 2:
-        weekday = 'Wed'
-    elif dia_da_semana == 3:
-        weekday = 'Thu'
-    elif dia_da_semana == 4:
-        weekday = 'Fri'
-    elif dia_da_semana == 5:
-        weekday = 'Sat'
-    elif dia_da_semana == 6:
-        weekday = 'Sun'
-    
-    return weekday,mes,dia,hora,ano
 
 
 
 
-def keyboardpress(brush_stats,paintWindow):
-    image_path = Image
-    
-    key_pressed = cv2.waitKey(1) & 0xFF
+
+def keyboardpress(brush_stats,copypaint,img):
+    cl = 0
+    key_pressed = cv2.waitKey(50) & 0xFF
     if key_pressed == ord('q'):
         cv2.destroyAllWindows
         print('Exiting...')
-        exit()
+        exit
         
     elif key_pressed == ord('r'):
         brush_stats['color'] = (0,0,255)
@@ -95,61 +71,61 @@ def keyboardpress(brush_stats,paintWindow):
             print('Min size reached')
             
     elif key_pressed == ord('c'):
-        paintWindow = np.zeros((500,600,3)) + 255
+        cl = 1
         
+        
+        
+    
+
     elif key_pressed == ord('w'):
-        date = datetime.datetime.now()
-        data(date)
+        date = time.ctime(time.time())
+        file_name = "Drawing " + date +".png"
+        print("Saving png image as " + file_name)
 
+        cv2.imwrite(file_name , copypaint) #! Caso seja com o video pode ter de se mudar aqui
 
-    return
+    return cl
             
     
-            
     
-            
-            
-            
-        
-            
-            
-            
-        
 
-def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
+def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V ,brush_stats=brush_stats, mirror=False):
     cam = cv2.VideoCapture(0)
-    paintWindow = np.zeros((500,600,3)) + 255
-    brushsize = 5
-    brushcolor = (255,255,255)
+    ret_val, img = cam.read()
+    paintWindow = np.zeros((img.shape)) + 255
+    
     while True:
+        
         ret_val, img = cam.read()
         
         if mirror:
             img = cv2.flip(img, 1)
             
+        
+          
+        
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         
         # Define the range of yellow color in HSV
-        print(type(high_H))
+        #print(type(high_H))
         upper_yellow = np.array([high_H, high_S, high_V])
         lower_yellow = np.array([low_H,low_S,low_V])
-        #lower_yellow = np.array([15,50,180])
-        #upper_yellow = np.array([40,255,255])
-        print(upper_yellow,lower_yellow)
+        
+        #print(upper_yellow,lower_yellow)
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
         
         
         # Find connected components in the binary mask
         num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(mask, connectivity=4)
-        print(num_labels)
+        #print(num_labels)
         
         
         # Find the label (component) with the largest area
         
         if num_labels > 1:
-            print('video ativo aqui 2')
+            #print('video ativo aqui 2')
             largest_component_label = np.argmax(stats[1:, cv2.CC_STAT_AREA]) + 1
-            print('video ativo aqui 3')
+            #print('video ativo aqui 3')
         
             # Create a mask containing only the largest component
             largest_component_mask = np.uint8(labels == largest_component_label) * 255
@@ -163,20 +139,29 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
                 cy = int(moments["m01"] / moments["m00"])
                 #print("Centroid X:", cx)
                 #print("Centroid Y:", cy)
-                cv2.circle(img, (cx, cy), 5, (0, 0, 255), -1)  # Red circle at the centroid
-                cv2.circle(hsv,(cx,cy),55,(0,0,255),-1)
-                cv2.circle(paintWindow,(cx,cy),brush_stats[size],brush_stats[color],1)
+                
             else:
                 print("No centroid found (division by zero)")
 
+            c = keyboardpress(brush_stats,paintWindow,img)
             
+            if c == 1: # CLEAR PAINT WINDOW
+                c = 0
+                paintWindow = np.zeros((img.shape)) + 255
+            else:
+                continue
+            
+            cv2.drawMarker(img, (cx, cy), color=[0, 0, 255], thickness=7,markerType= cv2.MARKER_TILTED_CROSS, line_type=cv2.LINE_AA,markerSize=30)
+            cv2.circle(hsv,(cx,cy),55,(0,0,255),-1)
+            cv2.circle(paintWindow,(cx,cy),brush_stats['size'],brush_stats['color'],-1)
+            copypaint = deepcopy(paintWindow) 
             
         
             # Display the largest component mask and the image with the centroid
             #cv2.imshow('Largest Component Mask', largest_component_mask)
         cv2.imshow('mask',mask)
         cv2.imshow('Image with Centroid', img)
-        cv2.imshow('draw', paintWindow)
+        cv2.imshow('drawing', paintWindow)
         
         
         if cv2.waitKey(1) == 27:
@@ -185,6 +170,8 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V , mirror=False):
     cam.release()
     cv2.destroyAllWindows()
     
+    
+
 
 def limits(json_file):
  
@@ -227,12 +214,13 @@ def limits(json_file):
     return low_H, low_S, low_V, high_H, high_S, high_V
 
 def main():
-    
+    global brush_stats
+    global copypaint
     args = arguments()
     json_file = args.json
-    brush()
     low_H, low_S, low_V, high_H, high_S, high_V= limits(json_file)
     show_webcam(low_H, low_S, low_V, high_H, high_S, high_V, mirror=True)
+    
     
 
 if __name__ == '__main__':
