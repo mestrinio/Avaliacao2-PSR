@@ -73,9 +73,6 @@ def keyboardpress(brush_stats,copypaint,img):
     elif key_pressed == ord('c'):
         cl = 1
         
-        
-        
-    
 
     elif key_pressed == ord('w'):
         date = time.ctime(time.time())
@@ -93,9 +90,10 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V ,brush_stats=brush_s
     cam = cv2.VideoCapture(0)
     ret_val, img = cam.read()
     paintWindow = np.zeros((img.shape)) + 255
+    copypaint = deepcopy(paintWindow)
     
     while True:
-        
+        c = keyboardpress(brush_stats,copypaint,img)
         ret_val, img = cam.read()
         
         if mirror:
@@ -143,7 +141,7 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V ,brush_stats=brush_s
             else:
                 print("No centroid found (division by zero)")
 
-            c = keyboardpress(brush_stats,paintWindow,img)
+            
             
             if c == 1: # CLEAR PAINT WINDOW
                 c = 0
