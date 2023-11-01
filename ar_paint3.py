@@ -36,13 +36,13 @@ def arguments():
 
 def keyboardpress(brush_stats,copypaint,img):
     cl = 0
-    key_pressed = cv2.waitKey(50) & 0xFF
-    if key_pressed == ord('q'):
-        cv2.destroyAllWindows
-        print('Exiting...')
-        exit
+    key_pressed = cv2.waitKey(25) & 0xFF
+    #if key_pressed == ord('q'):
+    #    cv2.destroyAllWindows
+    #    print('Exiting...')
+    #    exit
         
-    elif key_pressed == ord('r'):
+    if key_pressed == ord('r'):
         brush_stats['color'] = (0,0,255)
         print('Brush color set to red')
         
@@ -144,16 +144,16 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V ,brush_stats=brush_s
 
             
             
-            if c == 1: # CLEAR PAINT WINDOW
-                c = 0
-                paintWindow = np.zeros((img.shape)) + 255
+        
             
             cv2.drawMarker(img, (cx, cy), color=[0, 0, 255], thickness=7,markerType= cv2.MARKER_TILTED_CROSS, line_type=cv2.LINE_AA,markerSize=30)
             cv2.circle(hsv,(cx,cy),55,(0,0,255),-1)
             cv2.circle(paintWindow,(cx,cy),brush_stats['size'],brush_stats['color'],-1)
             copypaint = deepcopy(paintWindow) 
             
-        
+        if c == 1: # CLEAR PAINT WINDOW
+                c = 0
+                paintWindow = np.zeros((img.shape)) + 255
             # Display the largest component mask and the image with the centroid
             #cv2.imshow('Largest Component Mask', largest_component_mask)
         cv2.imshow('mask',mask)
@@ -161,8 +161,12 @@ def show_webcam(low_H, low_S, low_V, high_H, high_S, high_V ,brush_stats=brush_s
         cv2.imshow('drawing', paintWindow)
         
         
-        if cv2.waitKey(1) == 27:
-            break  # Close the window if the 'Esc' key is pressed
+        if cv2.waitKey(25) == ord('q'):
+            cv2.destroyAllWindows
+            print('Exiting...')
+            break
+        
+        
 
     cam.release()
     cv2.destroyAllWindows()
