@@ -18,7 +18,7 @@ from collections import namedtuple
 from math import sqrt
 
 import tkinter as tk
-from tkinter import messagebox, Tk, Frame, Menu
+from tkinter import messagebox, Tk, Frame, Menu, ttk
 
 #import imutils
 
@@ -130,6 +130,7 @@ def mouseCallback(event,x,y,flag,param,copypaint,brush_stats):
 
     #cv2.setMouseCallback('paintwindow',copypaint,brush_stats)
 
+
 def SelectingMode (img,mask,copypaint,copyimg,centroids,brush_stats,usp,switch,mouse):
 
 
@@ -140,8 +141,6 @@ def SelectingMode (img,mask,copypaint,copyimg,centroids,brush_stats,usp,switch,m
 
     elif mouse ==False:
         draw(img,mask,copypaint,copyimg,centroids,brush_stats,usp,switch)
-
-
 
 
 def drawLine(copyimg,copypaint,points,brush_stats,usp,switch):
@@ -211,7 +210,6 @@ def LimitS(json_file):
     print("R max " + str(high_V))
     
     return low_H, low_S, low_V, high_H, high_S, high_V
-
 
 
 def connectedcomponents(mask):
@@ -284,6 +282,74 @@ def draw(img, mask,copypaint,copyimg,centroids,brush_stats,usp,switch):
         #cv2.imshow("Biggest Object in Mask",cc_mask)
 
 
+def Menu_interface():
+
+    # root window
+    root = tk.Tk()
+    root.title('Menu Demo')
+    root.geometry("500x500")
+    root.resizable(0,0)
+
+    # configure the grid
+    root.columnconfigure(0, weight=1)
+    root.columnconfigure(1, weight=3)
+
+    # Informatinos about the keys
+    username_label = ttk.Label(root, text="Funcionalidades:")
+    username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
+    
+    password_label = ttk.Label(root, text="Q - Quiting program")
+    password_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="R - Red color")
+    password_label.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
+    
+    password_label = ttk.Label(root, text="B - Blue color")
+    password_label.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
+    
+    password_label = ttk.Label(root, text="G - Green color")
+    password_label.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="P - Black color")
+    password_label.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="M -  Mouse mode")
+    password_label.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="I - Image Mode")
+    password_label.grid(column=0, row=7, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="X - Ruber")
+    password_label.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="C - Clear cavas")
+    password_label.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="W - Saving Draw")
+    password_label.grid(column=1, row=3, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="+ - Encreasing size")
+    password_label.grid(column=1, row=4, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="- - Decreasing size")
+    password_label.grid(column=1, row=5, sticky=tk.W, padx=5, pady=5)
+
+    password_label = ttk.Label(root, text="J - Draw on video window")
+    password_label.grid(column=1, row=6, sticky=tk.W, padx=5, pady=5)
+
+    
+    # create a menubar
+    menubar = Menu(root)
+    root.config(menu=menubar)
+    # create a menu
+    file_menu = Menu(menubar)
+    # add a menu item to the menu
+    file_menu.add_command(label='Exit',command=root.destroy)
+    # add the File menu to the menubar
+    menubar.add_cascade(label="File",menu=file_menu)
+    root.mainloop()
+
+
     
 def main():
     global usp_sensitivity
@@ -313,7 +379,7 @@ def main():
     brush_stats = {'size' : 10, 'color' : (0,0,0)}
     
     mouse =False
-
+    i = 0
     #cv2.namedWindow("Drawing")
     #cv2.setMouseCallback("Drawing",partial(mouseCallback,points = centroids))
 
@@ -325,7 +391,8 @@ def main():
    #     elif normal_mode:
    #         cv2.createTrackbar("Usp_sensibility","Drawing",usp_sensitivity,400,lambda x:x)
 
-   
+
+
     while(1):
         ##* ---Updating usp sensibility---
 #
@@ -371,6 +438,15 @@ def main():
 
         # draw(img, mask,src_copypaint,centroids,brush_stats,usp,flip_flop,shape_points,puzzle_mode)
 
+        if i ==0:
+            Menu_interface()
+            i = 1
+        
+        else:
+            continue
+        
+
+
         copyimg, copypaint, centroids, switch, mouse = KeyboardpresS(img,brush_stats,copypaint,copyimg,centroids,switch, mouse) 
         SelectingMode(img,mask,copypaint,copyimg,centroids,brush_stats,usp,switch, mouse)
 
@@ -378,7 +454,7 @@ def main():
 
            
         
-
+        
         cv2.imshow('mask',mask)
         
         cv2.imshow('Image with Centroid', img)
@@ -388,55 +464,6 @@ def main():
             cv2.imshow('paintCam',copyimg)
 
 
-    # root window
-    root = Tk()
-    root.geometry('320x150')
-    root.title('Menu Demo')
-
-
-    # create a menubar
-    menubar = Menu(root)
-    root.config(menu=menubar)
-
-    # create the file_menu
-    file_menu = Menu(
-        menubar,
-        tearoff=0
-    )
-
-    # add menu items to the File menu
-    file_menu.add_command(label='New')
-    file_menu.add_command(label='Open...')
-    file_menu.add_command(label='Close')
-    file_menu.add_separator()
-
-    # add Exit menu item
-    file_menu.add_command(
-        label='Exit',
-        command=root.destroy
-    )
-
-    # add the File menu to the menubar
-    menubar.add_cascade(
-        label="File",
-        menu=file_menu
-    )
-    # create the Help menu
-    help_menu = Menu(
-        menubar,
-        tearoff=0
-    )
-
-    help_menu.add_command(label='Welcome')
-    help_menu.add_command(label='About...')
-
-    # add the Help menu to the menubar
-    menubar.add_cascade(
-        label="Help",
-        menu=help_menu
-    )
-
-    root.mainloop()
 
 if __name__ == '__main__':
     main()
