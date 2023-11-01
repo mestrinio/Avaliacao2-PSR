@@ -107,7 +107,8 @@ This assignment was developed for Robotic Systems Programming. It is an Augmente
 ### Color Segmenter
 The color segmenter program asks the user what parameters for color detection he wants. This part captures the webcam and shows 6 trackbars on the image so that the user can define the right color detection for whatever object he wants to use for painting. Then saves these values on a JSON file.
 
-<h1> INSERT IMAGE HERE *************</h1>
+
+
 
 ### AR Paint
 
@@ -181,17 +182,43 @@ Run color_segmenter.py:
 - Use the masked image to understand if the values are as desired;
 - Hit 'W' to save the values to the JSON file.
 
+<br>
+<br>
+<div align="center">
+<img  src="images/colorsegmenter.png" alt="colorsegmenter" height="">
+</div>
+<div align="center">Choose your detection values then hit 'W' to save them</div>
+<br>
+<br>
+
+***
+
 Arguments when running ar_paint.py:
 - -h (Calls for help argument, that explains the other arguments used);
 - -usp (Activates the usage of shake protection).
 - -j (Insert the full path to the JSON file created in color_segmenter.py)
 
+<br>
+<div align="center">
+<img  src="images/runarpaint.png" alt="runarpaint" height="">
+</div>
+<div align="center">Specify the full JSON file's path after -j and write -usp if you want to activate shake protection</div>
+<br>
+<br>
+<br>
+
 Run ar_paint.py:
-- Show your beautiful face to the camera;
+- A rememberal for the hotkeys to use during the program should pop-up;
+- Drawing in the blank canvas should start happening when detecting the color on the camera;
+- Use the hotkeys to change the brush characteristics, switch to drawing on the webcam capture, draw using the mouse and clean or save the current canvas;
+
+<br>
+<div align="center">
+<img  src="images/drawings.png" alt="drawings" height="300">
+</div>
+<div align="center">Start drawing!</div>
 
 
-
-- When prompted to, write your name and press save or hit Enter, it shall now detect your face, identify it, and track it even when you get obstructed by something or leave the camera FOV and come out on the opposite side;
 
 <br>
 <br>
