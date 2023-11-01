@@ -39,7 +39,7 @@ def KeyboardpresS(brush_stats,copypaint,img):
     key_pressed = cv2.waitKey(50) & 0xFF
 
     if key_pressed == ord('q'):
-        cv2.destroyAllWindows
+        #cv2.destroyAllWindows
         print('Exiting...')
         exit()
         

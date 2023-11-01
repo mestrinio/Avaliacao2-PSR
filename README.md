@@ -138,17 +138,24 @@ The actual painting part of the program should accomplish the following requirem
 
 ***
 #### Advanced features
-##### Use Shake Protection
-The program is designed to draw lines between centroids instead of circles in each centroid
+##### Feature 1 - Use Shake Protection
+The program is designed to draw lines between centroids instead of circles in each centroid. But sometimes errors in the color detection can happen, and detections on random points of the camera happen, resulting in enormous lines across the canvas. Shake protection detects if the distance between lines is too big to be right, and prevents the drawing. The program should also function using the mouse clicks to draw when either the detections are failing, or the user chooses to do it.
+
+##### Feature 2 - Use webcam feed as canvas
+The program should allow the switch in the canvas choice, between the white canvas and the actual webcam frames.
+
+##### Feature 3 - Draw shapes
+The program should allow the drawing of shapes on the canvas, rectangles, circles and ellipses. To do so, the user shall press & hold the corresponding key of the shape, to start drawing it, and release it when finishing the size of the shape.
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is a Python file, so it should be ran in a dedicated terminal running main.py, which is the file that runs the entire program, it can be found under /src directory.
+This is a Python file, so it should be ran in a dedicated terminal running color_segmenter.py, which is the file that runs the first part of the program, to select the desired values for detections. The second and main part of the program, ar_paint.py, runs the painting part and all it's features, but it has some arguments which will be explained later but can be seen using -h argument.
 
 ```
-./main.py
+./color_segmenter.py
+./ar_paint.py -h
 ```
 
 
@@ -158,13 +165,7 @@ This is a Python file, so it should be ran in a dedicated terminal running main.
 
 To run the program, the following libraries should be installed:
 ```
-sudo apt install python3 python3-tk
-sudo apt install python3-pip
-pip install pygame
-pip install gtts
-pip install opencv-python
-pip install imutils
-pip install numpy
+INSERT LIBRARIES INSTALL IN HERE*****************
 ```
 
 
@@ -175,8 +176,17 @@ pip install numpy
 
 ### How it works
 
+Run color_segmenter.py:
+- Select desired values for color detection using the trackbars;
+- Use the masked image to understand if the values are as desired;
+- Hit 'W' to save the values to the JSON file.
 
-Run main.py:
+Arguments when running ar_paint.py:
+- -h (Calls for help argument, that explains the other arguments used);
+- -usp (Activates the usage of shake protection).
+- -j (Insert the full path to the JSON file created in color_segmenter.py)
+
+Run ar_paint.py:
 - Show your beautiful face to the camera;
 
 
@@ -225,9 +235,7 @@ Run main.py:
 
 <br>
 
-Arguments when running main.py:
-- -c (defines which Haar Cascade it is used for detection);
-- -t (defines which tracking method is going to be used).
+
 
 
 
@@ -235,13 +243,14 @@ Arguments when running main.py:
 
 <!-- CONTACT -->
 ## Contact
-Alexandre Carola - amcc@ua.pt
-
-
-Bruno Silva - bruno.favs@ua.pt
+Gustavo Reggio - @ua.pt
 
 
 Pedro Martins - pedro.mestre@ua.pt
+
+
+Tomás Taxa - @ua.pt
+
 
 Project Link: [Trabalho Prático 1](https://github.com/brunofavs/SAVI_TP1)
 
