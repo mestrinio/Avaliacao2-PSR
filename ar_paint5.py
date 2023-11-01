@@ -119,12 +119,12 @@ def drawLine(copypaint,points,brush_stats,usp):
     
 
     # If can do a line goes here
-    inicial_point = (points['x'][-2],points['y'][-2] )
+    initial_point = (points['x'][-2],points['y'][-2] )
     final_point = (points['x'][-1],points['y'][-1] )
     
     # using shake protection
     if usp: 
-        distance = round(sqrt((inicial_point[0]-final_point[0])**2+(inicial_point[1]-final_point[1])**2))
+        distance = round(sqrt((initial_point[0]-final_point[0])**2+(initial_point[1]-final_point[1])**2))
         if distance > usp_sensitivity:
             cv2.circle(copypaint, (points['x'][-1],points['y'][-1]) , brush_stats['size'] //2 ,brush_stats['color'], -1) # !!!!!!!!!!!! //2
             return
@@ -304,7 +304,9 @@ def connectedcomponents(mask):
         
             # Create a mask containing only the largest component
             largest_component_mask = np.uint8(labels == largest_component_label) * 255
-        
+            
+            #! TODO PAINT THE OBJECT IN GREEN ON THE MASK IMSHOW    
+            
             # Calculate moments of the largest component
             moments = cv2.moments(largest_component_mask)
 
