@@ -379,7 +379,8 @@ def main():
     brush_stats = {'size' : 10, 'color' : (0,0,0)}
     
     mouse =False
-    i = 0
+    alpha = 0.2
+    beta = (1.0 - alpha)
     #cv2.namedWindow("Drawing")
     #cv2.setMouseCallback("Drawing",partial(mouseCallback,points = centroids))
 
@@ -391,7 +392,7 @@ def main():
    #     elif normal_mode:
    #         cv2.createTrackbar("Usp_sensibility","Drawing",usp_sensitivity,400,lambda x:x)
 
-
+    Menu_interface()
 
     while(1):
         ##* ---Updating usp sensibility---
@@ -413,6 +414,7 @@ def main():
         upper = np.array([high_H, high_S, high_V])
         lower = np.array([low_H,low_S,low_V])
         mask = cv2.inRange(hsv, lower, upper)
+        img2 = deepcopy(img)
         
         
         #num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(mask, connectivity=4)
@@ -438,17 +440,12 @@ def main():
 
         # draw(img, mask,src_copypaint,centroids,brush_stats,usp,flip_flop,shape_points,puzzle_mode)
 
-        if i ==0:
-            Menu_interface()
-            i = 1
-        
-        else:
-            continue
         
 
 
         copyimg, copypaint, centroids, switch, mouse = KeyboardpresS(img,brush_stats,copypaint,copyimg,centroids,switch, mouse) 
         SelectingMode(img,mask,copypaint,copyimg,centroids,brush_stats,usp,switch, mouse)
+        img2 = cv2.addWeighted(copyimg,alpha,img2,beta,0.0)
 
         #draw(img,mask,copypaint,copyimg,centroids,brush_stats,usp,switch)
 
@@ -461,7 +458,7 @@ def main():
         if switch == 0:
             cv2.imshow('paintwindow',copypaint)
         else:
-            cv2.imshow('paintCam',copyimg)
+            cv2.imshow('paintCam',img2)
 
 
 
