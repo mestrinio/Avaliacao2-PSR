@@ -29,7 +29,7 @@
 <br />
 
   <a href="https://github.com/mestrinio/Avaliacao2-PSR/graphs/">
-    <img src="docs/LOGO.png" alt="Logo" width="550" height="350">
+    <img src="images/logo.png" alt="Logo" width="550" height="350">
   </a>
 
 <h3 align="center">PSR - Trabalho Prático 2</h3>
@@ -77,10 +77,9 @@
 <!-- ABOUT THE ASSIGNMENT -->
 ## About the Assignment
 <div align="center">
-<img  src="docs/tracking.gif" alt="GIF animated" width="400">
+<img  src="images/drawing1.png" alt="colorsegmenter" height="400">
 </div>
 <br>
-
 This assignment was developed for Robotic Systems Programming. It is an Augmented Reality Painting program, which uses the computer webcam to detect a specific chosen color, and with that, draw on the exact position in a white canvas. This uses Python's OpenCV and includes some advanced features requested by the teacher.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -127,17 +126,7 @@ The actual painting part of the program should accomplish the following requirem
 - Calculate that object's centroid (and mark it as a red cross 'X' on the webcam's feed);
 - Use that centroid to paint a circle or a line in the white canvas, with the chosen characteristics for the painting;
 ***
-##### Keybindings:
-- 'R' to change brush color to <p style="color: rgb(255,0,0)">RED</p>
-- 'G' to change brush color to <p style="color: rgb(0,255,0)">GREEN</p>
-- 'B' to change brush color to <p style="color: rgb(0,0,255)">BLUE</p>
-- '+' to increase brush size
-- '-' to decrease brush size
-- 'C' to clear the canvas
-- 'W' to save the current canvas to an image file
-- 'Q' shutdown the program
 
-***
 #### Advanced features
 ##### Feature 1 - Use Shake Protection
 The program is designed to draw lines between centroids instead of circles in each centroid. But sometimes errors in the color detection can happen, and detections on random points of the camera happen, resulting in enormous lines across the canvas. Shake protection detects if the distance between lines is too big to be right, and prevents the drawing. The program should also function using the mouse clicks to draw when either the detections are failing, or the user chooses to do it.
@@ -218,55 +207,23 @@ Run ar_paint.py:
 </div>
 <div align="center">Start drawing!</div>
 
+##### Keybindings:
+- 'R' to change brush color to <p style="color: rgb(255,0,0)">RED</p>
+- 'G' to change brush color to <p style="color: rgb(0,255,0)">GREEN</p>
+- 'B' to change brush color to <p style="color: rgb(0,0,255)">BLUE</p>
+- 'P' to change brush color to <p style="color: rgb(0,0,0)">BLACK</p>
+- '+' to increase brush size
+- '-' to decrease brush size
+- 'X' to use rubber
+- 'C' to clear the canvas
+- 'W' to save the current canvas to an image file
+- 'J' to switch between the white canvas and the webcam
+- 'M' start using the mouse to draw
+- 'I' stop using the mouse to draw
+- 'Q' shutdown the program
 
-
+***
 <br>
-<br>
-<div align="center">
-<img  src="docs/entername.png" alt="entername" height="150"><img  src="docs/savename.png" alt="savename" height="150">
-</div>
-<div align="center">Prompt to save your name (click save or hit Enter)</div>
-
-<br>
-<br>
-<div align="center">
-<img  src="docs/detected.png" alt="detected" height="200">
-</div>
-<div align="center">Started recognizing and tracking the face</div>
-
-<br>
-<br>
-<br>
-<br>
-
-<div align="center">
-<img  src="docs/dissapearing.png" alt="dissapearing" height="150"><img  src="docs/dissapeared.png" alt="dissapeared" height="150"><img  src="docs/reappearing.png" alt="reappearing" height="150">
-</div>
-
-<div align="center">Disappearing from one side and appearing on the other </div>
-
-<br>
-<br>
-<br>
-<br>
-<div align="center">
-<img  src="docs/detectedobstruct.png" alt="obstructed" height="150">
-</div>
-<div align="center">Tracking the face even when obstructed</div>
-<br>
-<br>
-
-- Show other faces and repeat.
-
-
-
-<br>
-
-
-
-
-
-
 
 <!-- CONTACT -->
 ## Contact
@@ -279,7 +236,7 @@ Pedro Martins - pedro.mestre@ua.pt
 Tomás Taxa - tomas.taxa@ua.pt
 
 
-Project Link: [Trabalho Prático 1](https://github.com/brunofavs/SAVI_TP1)
+Project Link: [Trabalho Prático 2](https://github.com/mestrinio/Avaliacao2-PSR)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
