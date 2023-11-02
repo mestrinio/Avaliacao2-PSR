@@ -298,7 +298,7 @@ def Menu_interface():
     username_label = ttk.Label(root, text="Funcionalidades:")
     username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
     
-    password_label = ttk.Label(root, text="Q - Quiting program")
+    password_label = ttk.Label(root, text="Q - Quitting program")
     password_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
 
     password_label = ttk.Label(root, text="R - Red color")
@@ -328,7 +328,7 @@ def Menu_interface():
     password_label = ttk.Label(root, text="W - Saving Draw")
     password_label.grid(column=1, row=3, sticky=tk.W, padx=5, pady=5)
 
-    password_label = ttk.Label(root, text="+ - Encreasing size")
+    password_label = ttk.Label(root, text="+ - Increasing size")
     password_label.grid(column=1, row=4, sticky=tk.W, padx=5, pady=5)
 
     password_label = ttk.Label(root, text="- - Decreasing size")
