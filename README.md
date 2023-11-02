@@ -154,10 +154,12 @@ This is a Python file, so it should be ran in a dedicated terminal running color
 <h3><b>Libraries</b></h3>
 
 To run the program, the following libraries should be installed:
-```
-INSERT LIBRARIES INSTALL IN HERE*****************
-```
 
+```
+sudo apt install python3 python3-tk
+pip install opencv-python
+pip install numpy
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -198,6 +200,15 @@ Arguments when running ar_paint.py:
 
 Run ar_paint.py:
 - A rememberal for the hotkeys to use during the program should pop-up;
+
+<br>
+<div align="center">
+<img  src="images/tkinter.png" alt="tkinter" height="300">
+</div>
+<div align="center">Keybindings window pop-up</div>
+<br>
+<br>
+
 - Drawing in the blank canvas should start happening when detecting the color on the camera;
 - Use the hotkeys to change the brush characteristics, switch to drawing on the webcam capture, draw using the mouse and clean or save the current canvas;
 
