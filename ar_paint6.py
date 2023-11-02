@@ -313,7 +313,7 @@ def Menu_interface():
     password_label = ttk.Label(root, text="P - Black color")
     password_label.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
 
-    password_label = ttk.Label(root, text="M -  Mouse mode")
+    password_label = ttk.Label(root, text="M - Mouse mode")
     password_label.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
 
     password_label = ttk.Label(root, text="I - Image Mode")
